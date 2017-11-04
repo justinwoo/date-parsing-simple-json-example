@@ -1,0 +1,14 @@
+{
+    "name": "date-parsing-simple-json-example",
+    "set": "aff-4.0-27-Oct-2017",
+    "source": "https://github.com/justinwoo/package-sets.git",
+    "depends": [
+        "js-date",
+        "datetime",
+        "simple-json",
+        "psci-support",
+        "console",
+        "eff",
+        "prelude"
+    ]
+}
