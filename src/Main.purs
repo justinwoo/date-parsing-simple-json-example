@@ -9,9 +9,7 @@ import Data.Either (Either(..))
 import Data.Foreign (ForeignError)
 import Data.JSDate (JSDate, LOCALE, parse, toDateString)
 import Data.List.NonEmpty (NonEmptyList)
-import Data.Record (set)
 import Simple.JSON (readJSON)
-import Type.Prelude (SProxy(..))
 
 type MyThing =
   { a :: String
@@ -28,9 +26,7 @@ readJSONMyThing jsonString = runExceptT do
   jsDate <- lift $ parse record.b
 
   -- set record.b from `String` to `JSDate`
-  pure $ set bProxy jsDate record :: MyThing
-  where
-    bProxy = SProxy :: SProxy "b"
+  pure $ record { b = jsDate }
 
 testJson1 :: String
 testJson1 = """
