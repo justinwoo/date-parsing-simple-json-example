@@ -2,12 +2,12 @@ module Main where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Console (log)
 import Control.Monad.Except.Trans (except, lift, runExceptT)
 import Data.Either (Either(..))
-import Data.Foreign (ForeignError)
-import Data.JSDate (JSDate, LOCALE, parse, toDateString)
+import Foreign (ForeignError)
+import Data.JSDate (JSDate, parse, toDateString)
 import Data.List.NonEmpty (NonEmptyList)
 import Simple.JSON (readJSON)
 
@@ -16,9 +16,7 @@ type MyThing =
   , b :: JSDate
   }
 
-readJSONMyThing :: forall e
-   . String
-  -> Eff ( locale :: LOCALE | e) (Either (NonEmptyList ForeignError) MyThing)
+readJSONMyThing :: String -> Effect (Either (NonEmptyList ForeignError) MyThing)
 readJSONMyThing jsonString = runExceptT do
   record <- except $ readJSON jsonString
 
@@ -52,7 +50,7 @@ testJson3 = """
 }
 """
 
-main :: forall e. Eff (locale :: LOCALE, console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   logDate =<< readJSONMyThing testJson1
   logDate =<< readJSONMyThing testJson2
